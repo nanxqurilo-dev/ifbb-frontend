@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import Input from "./Input";
 import FooterBanner from "./FooterBanner";
 
@@ -18,6 +18,65 @@ const Contact = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+  const [courses, setCourses] = useState([]);
+
+
+
+useEffect(() => {
+  fetchCourses();
+}, []);
+
+// const fetchCourses = async () => {
+//   try {
+
+  
+//     const response = await fetch(
+//       "https://api.ifbb.qurilo.com/api/user/get-all-courses-title",{
+
+//          method: "GET",
+//           headers: {
+//             "Content-Type": "application/json",
+//           },
+//           body: JSON.stringify(formData),
+
+//       }
+//     );
+
+// console.log("ijhugyf" ,response)
+
+//     const data = await response.json();
+
+//     if (response.ok) {
+//       setCourses(data.data || []);
+//     }
+//   } catch (error) {
+//     console.error("Error fetching courses:", error);
+//   }
+// };
+
+
+
+
+const fetchCourses = async () => {
+  try {
+    const response = await fetch(
+      "https://api.ifbb.qurilo.com/api/user/get-all-courses-title"
+    );
+
+    const data = await response.json();
+
+    console.log("Courses API:", data);
+
+    if (response.ok) {
+      setCourses(data.courses || []);
+    }
+  } catch (error) {
+    console.error("Error fetching courses:", error);
+  }
+};
+
+
+
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -86,16 +145,28 @@ const Contact = () => {
     setLoading(true);
 
     try {
-      const response = await fetch(
-        "https://api.ifbb.qurilo.com/api/course-inquiry",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      );
+      // const response = await fetch(
+      //   "https://api.ifbb.qurilo.com/api/course-inquiry",
+      //   {
+      //     method: "POST",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //     body: JSON.stringify(formData),
+      //   }
+      // );
+
+
+
+
+const response = await fetch(
+  "https://api.ifbb.qurilo.com/api/user/get-all-courses-title",
+  {
+    method: "GET",
+  }
+);
+
+
 
       const data = await response.json();
 
@@ -157,13 +228,20 @@ const Contact = () => {
       value: formData.dob,
       placeholder: "Enter Your DOB",
     },
-    {
-      label: "Selected Course",
-      type: "text",
-      name: "course",
-      value: formData.course,
-      placeholder: "Select Course",
-    },
+    // {
+    //   label: "Selected Course",
+    //   type: "text",
+    //   name: "course",
+    //   value: formData.course,
+    //   placeholder: "Select Course",
+    // },
+
+
+
+
+
+
+    
     {
       label: "State",
       type: "text",
@@ -197,7 +275,7 @@ const Contact = () => {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      {/* <form onSubmit={handleSubmit} className="space-y-4">
         {inputDetails.map((detail, index) => (
           <Input
             key={index}
@@ -247,8 +325,96 @@ const Contact = () => {
         >
           {loading ? "Submitting..." : "Submit Now"}
         </button>
-      </form>
+      </form> */}
 
+
+
+
+<form onSubmit={handleSubmit} className="space-y-4">
+  {inputDetails.map((detail, index) => (
+    <Input
+      key={index}
+      detail={detail}
+      handleChange={handleChange}
+      required={true}
+    />
+  ))}
+
+  {/* Course Dropdown */}
+  <div>
+    <label className="block mb-1 font-medium">
+      Selected Course
+    </label>
+
+   <select
+  name="course"
+  value={formData.course}
+  onChange={handleChange}
+  required
+  className="w-full border border-zinc-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#2424B9]"
+>
+  <option value="">Select Course</option>
+
+  {courses.map((course) => (
+    <option
+      key={course._id}
+      value={course.title}
+    >
+      {course.title}
+    </option>
+  ))}
+</select>
+  </div>
+
+  <div>
+    <label className="block mb-1 font-medium">Message</label>
+    <textarea
+      name="message"
+      rows="4"
+      value={formData.message}
+      onChange={handleChange}
+      required
+      placeholder="Type your message..."
+      className="w-full border border-zinc-300 rounded resize-none px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#2424B9]"
+    />
+  </div>
+
+
+
+{/* Terms & Conditions */}
+<div className="flex items-center space-x-2">
+  <input
+    name="termsAccepted"
+    type="checkbox"
+    checked={formData.termsAccepted}
+    onChange={handleChange}
+    className="border rounded cursor-pointer"
+  />
+  <label className="text-sm cursor-pointer">
+    I accept the{" "}
+    <a href="#" className="text-[#2424B9] underline">
+      Terms and Conditions
+    </a>
+  </label>
+</div>
+
+{/* Submit Button */}
+<button
+  type="submit"
+  disabled={loading}
+  className={`w-full py-3 rounded text-white font-semibold transition-all duration-200 ${
+    loading
+      ? "bg-gray-400 cursor-not-allowed"
+      : "bg-[#2424B9] hover:bg-blue-800"
+  }`}
+>
+  {loading ? "Submitting..." : "Submit Now"}
+</button>
+
+
+
+
+</form>
 
       
 
