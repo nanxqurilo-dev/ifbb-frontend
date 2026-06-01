@@ -1,5 +1,6 @@
 import React from 'react'
 import Contact from '../components/Contact.jsx'
+import FooterBanner from '../components/FooterBanner.jsx'
 
 const ContactUs = () => {
     return (
@@ -20,10 +21,17 @@ const ContactUs = () => {
 
             <div className="lg:w-1/2">
                 <Contact />
+
+
+
             </div>
 
 
+
+
         </div>
+
+
 
 
     )

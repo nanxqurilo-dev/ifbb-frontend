@@ -1,6 +1,7 @@
 
 import React, { useState } from "react";
 import Input from "./Input";
+import FooterBanner from "./FooterBanner";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -247,7 +248,15 @@ const Contact = () => {
           {loading ? "Submitting..." : "Submit Now"}
         </button>
       </form>
+
+
+      
+
+
     </div>
+
+
+
   );
 };
 

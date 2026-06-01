@@ -2,6 +2,7 @@ import React from 'react'
 import HeadingBanner from '../components/HeadingBanner'
 import GalleryBanner from '../assets/GalleryBanner.jpg'
 import GImg from '../components/Gallery'
+import FooterBanner from '../components/FooterBanner'
 
 const Gallery = () => {
   return (
@@ -9,6 +10,9 @@ const Gallery = () => {
     <>
       <HeadingBanner title={"Gallery"} src={GalleryBanner} />
       <GImg />
+
+      
+<FooterBanner />
     </>
   )
 }

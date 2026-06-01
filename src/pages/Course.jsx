@@ -248,7 +248,13 @@ const Course = () => {
                         </a>
                     </div>
                 </div>
+
+
+
+
             </div>
+
+            
 
             {/* Custom Animations CSS */}
             <style jsx>{`
@@ -304,7 +310,15 @@ const Course = () => {
                     }
                 }
             `}</style>
+
+
+
+
+
         </div>
+
+
+
     );
 };
 
