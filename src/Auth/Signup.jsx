@@ -94,6 +94,8 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { TbLoader3 } from "react-icons/tb";
 import { API_URL } from "../api/apiUrl";
+import signupImage from "../assets/signupImage.png";
+
 
 const Signup = () => {
   const [form, setForm] = useState({
@@ -137,13 +139,26 @@ const Signup = () => {
   };
 
   return (
-    <div className="flex min-h-screen">
-      <div
+<div className="min-h-screen flex flex-col lg:flex-row">
+
+
+
+      {/* <div
         className="w-1/2 bg-contain bg-center hidden border-blue-600 lg:block"
         style={{ backgroundImage: "url('src/assets/signupImage.png')" }}
-      />
+      /> */}
 
-      <div className="w-full lg:w-1/2 flex items-center justify-center bg-white px-6">
+
+<div className="w-full lg:w-1/2">
+  <img
+    src={signupImage}
+    alt="Signup"
+  className="w-full h-[300px] md:h-[450px] lg:h-screen object-contain mt-6 lg:mt-0"
+  />
+</div>
+
+
+      <div className="w-full lg:w-1/2 flex items-center justify-center bg-white px-6 py-10">
         <div className="w-full max-w-md space-y-6">
           <h2 className="text-3xl font-semibold">Create your account!</h2>
           <p className="text-gray-500">Enter your full details</p>
