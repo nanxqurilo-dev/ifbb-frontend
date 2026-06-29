@@ -44,6 +44,9 @@ const CourseDetail = () => {
   const [ratingSubmitted, setRatingSubmitted] = useState(false);
   const [ratingMessage, setRatingMessage] = useState("");
 
+
+  const [review, setReview] = useState("");
+
   // Check login status on mount
   useEffect(() => {
     const token = localStorage.getItem("user-auth-token");
@@ -416,6 +419,13 @@ const CourseDetail = () => {
       return;
     }
 
+
+if (!review.trim()) {
+    alert("Please write a review.");
+    return;
+}
+
+
     const token = localStorage.getItem("user-auth-token");
     let extractedUserId = userId || localStorage.getItem("user-id");
 
@@ -442,7 +452,7 @@ const CourseDetail = () => {
         user_id: extractedUserId,
         course_id: id,
         value: selectedRating,
-        review: "this course is good"
+        review: review
       }
 
       console.log(payload);
@@ -461,6 +471,12 @@ const CourseDetail = () => {
 
       if (response.data?.success) {
         setRatingSubmitted(true);
+
+    setSelectedRating(0);
+    setHoveredRating(0);
+    setReview("");
+
+
         setRatingMessage(
           `✅ Rating submitted! Average: ${response.data.data.averageRating} (${response.data.data.totalRatings} ratings)`
         );
@@ -1054,6 +1070,35 @@ const CourseDetail = () => {
                           )}
                         </div>
 
+
+
+<div className="w-full">
+    <label className="block text-sm font-semibold text-gray-700 mb-2">
+        Write Your Review
+    </label>
+
+    <textarea
+        rows={4}
+        value={review}
+        onChange={(e) => setReview(e.target.value)}
+        placeholder="Share your experience about this course..."
+        className="
+            w-full
+            rounded-lg
+            border
+            border-gray-300
+            p-3
+            text-sm
+            outline-none
+            resize-none
+            focus:border-orange-500
+            focus:ring-2
+            focus:ring-orange-300
+        "
+    />
+</div>
+
+
                         <button
                           onClick={handleRatingSubmit}
                           disabled={ratingLoading}
@@ -1065,7 +1110,7 @@ const CourseDetail = () => {
                           {ratingLoading ? (
                             <><FaSpinner className="animate-spin" /> Submitting...</>
                           ) : (
-                            <><FaStar /> Submit Rating</>
+                            <><FaStar /> Submit Rating & Review</>
                           )}
                         </button>
 
