@@ -938,18 +938,33 @@ const CourseDetail = () => {
           {/* Left - Course Details */}
           <div className="w-full lg:w-1/2">
             <div className="bg-white rounded overflow-hidden shadow">
-              <div className="relative h-[400px] bg-gradient-to-br from-gray-200 to-gray-300 overflow-hidden">
+              {/* <div className="relative h-[400px] bg-gradient-to-br from-gray-200 to-gray-300 overflow-hidden"> */}
+               <div className="relative w-full bg-gray-100">
                 <span className="bg-red-600 text-white text-sm m-1 absolute rounded border-none outline-none p-1">
                   {parseInt(discountedPrice)}%
                 </span>
-                <img
+                {/* <img
                   src={courseThumbnail}
                   alt={title}
                   className="w-full h-full object-cover transition-transform  duration-500"
                   onError={(e) => {
                     e.target.src = "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800";
                   }}
-                />
+                /> */}
+
+
+
+<img
+  src={courseThumbnail}
+  alt={title}
+  className="w-full h-auto block"
+  onError={(e) => {
+    e.target.src =
+      "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800";
+  }}
+/>
+
+
               </div>
 
               <div className="p-6 space-y-5">
