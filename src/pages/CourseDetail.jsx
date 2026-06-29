@@ -657,8 +657,8 @@ const CourseDetail = () => {
   // ==================== PDF VIEWER MODAL ====================
   if (pdfUrl) {
     return (
-      <div className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4">
-        <div className="bg-white rounded w-full max-w-6xl h-[90vh] flex flex-col">
+      <div className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-10">
+        <div className="bg-white rounded w-full max-w-3xl h-[90vh] flex flex-col">
           <div className="flex justify-between items-center p-1 border-b bg-gradient-to-r from-blue-600 to-indigo-600 rounded">
             <h3 className="text-xl font-bold text-white flex items-center gap-2"></h3>
             <button
@@ -679,7 +679,7 @@ const CourseDetail = () => {
               }}
             />
           </div>
-          <div className="p-3 border-t bg-gray-50 flex justify-between items-center">
+          {/* <div className="p-3 border-t bg-gray-50 flex justify-between items-center">
             <p className="text-sm text-gray-600">💡 Tip: Use browser zoom controls if text is too small</p>
             <a
               href={pdfUrl}
@@ -689,7 +689,7 @@ const CourseDetail = () => {
             >
               Open in New Tab →
             </a>
-          </div>
+          </div> */}
         </div>
       </div>
     );
@@ -945,7 +945,7 @@ const CourseDetail = () => {
                 <img
                   src={courseThumbnail}
                   alt={title}
-                  className="w-full h-full object-cover transition-transform duration-500"
+                  className="w-full h-full object-cover transition-transform  duration-500"
                   onError={(e) => {
                     e.target.src = "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800";
                   }}
