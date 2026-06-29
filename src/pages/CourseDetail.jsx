@@ -679,17 +679,17 @@ const CourseDetail = () => {
               }}
             />
           </div>
-          {/* <div className="p-3 border-t bg-gray-50 flex justify-between items-center">
+          <div className="p-3 border-t bg-gray-50 flex justify-between items-center">
             <p className="text-sm text-gray-600">💡 Tip: Use browser zoom controls if text is too small</p>
-            <a
+            {/* <a
               href={pdfUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition font-semibold text-sm"
             >
               Open in New Tab →
-            </a>
-          </div> */}
+            </a> */}
+          </div>
         </div>
       </div>
     );
