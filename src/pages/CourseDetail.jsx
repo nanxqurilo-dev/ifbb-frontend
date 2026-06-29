@@ -45,6 +45,13 @@ const CourseDetail = () => {
   const [ratingMessage, setRatingMessage] = useState("");
 
 
+  const [showRatingPopup, setShowRatingPopup] = useState(false);
+  const [popupData, setPopupData] = useState({
+    type: "",
+    title: "",
+    message: "",
+  });
+
   const [review, setReview] = useState("");
 
   // Check login status on mount
@@ -420,10 +427,10 @@ const CourseDetail = () => {
     }
 
 
-if (!review.trim()) {
-    alert("Please write a review.");
-    return;
-}
+    if (!review.trim()) {
+      alert("Please write a review.");
+      return;
+    }
 
 
     const token = localStorage.getItem("user-auth-token");
@@ -472,22 +479,85 @@ if (!review.trim()) {
       if (response.data?.success) {
         setRatingSubmitted(true);
 
-    setSelectedRating(0);
-    setHoveredRating(0);
-    setReview("");
+        // setSelectedRating(0);
+        // setHoveredRating(0);
+        // setReview("");
 
 
-        setRatingMessage(
-          `✅ Rating submitted! Average: ${response.data.data.averageRating} (${response.data.data.totalRatings} ratings)`
-        );
+        //     setRatingMessage(
+        //       `✅ Rating submitted! Average: ${response.data.data.averageRating} (${response.data.data.totalRatings} ratings)`
+        //     );
+
+
+
+
+
+        setRatingSubmitted(true);
+
+        setSelectedRating(0);
+        setHoveredRating(0);
+        setReview("");
+
+        setPopupData({
+          type: "success",
+          title: "Thank You!",
+          message: "Your rating and review have been submitted successfully.",
+        });
+
+        setShowRatingPopup(true);
+
+
       }
-    } catch (err) {
-      console.error("❌ Rating error:", err);
-      const msg = err.response?.data?.message || "Failed to submit rating. Please try again.";
-      setRatingMessage(`❌ ${msg}`);
-    } finally {
+    }
+    //  catch (err) {
+    //   console.error("❌ Rating error:", err);
+    //   const msg = err.response?.data?.message || "Failed to submit rating. Please try again.";
+    //   setRatingMessage(`❌ ${msg}`);
+    // } finally {
+    //   setRatingLoading(false);
+    // }
+
+
+
+
+
+    catch (err) {
+      console.error("Rating Error:", err);
+
+      const msg =
+        err.response?.data?.message ||
+        "Failed to submit rating.";
+
+      if (
+        msg.toLowerCase().includes("already rated")
+      ) {
+        setPopupData({
+          type: "warning",
+          title: "Already Rated",
+          message:
+            "You have already submitted a rating for this course. Each user can rate a course only once.",
+        });
+
+        setShowRatingPopup(true);
+      } else {
+        setPopupData({
+          type: "error",
+          title: "Submission Failed",
+          message: msg,
+        });
+
+        setShowRatingPopup(true);
+      }
+    }
+    finally {
       setRatingLoading(false);
     }
+
+
+
+
+
+
   };
 
   const closePdfViewer = () => {
@@ -1072,17 +1142,17 @@ if (!review.trim()) {
 
 
 
-<div className="w-full">
-    <label className="block text-sm font-semibold text-gray-700 mb-2">
-        Write Your Review
-    </label>
+                        <div className="w-full">
+                          <label className="block text-sm font-semibold text-gray-700 mb-2">
+                            Write Your Review
+                          </label>
 
-    <textarea
-        rows={4}
-        value={review}
-        onChange={(e) => setReview(e.target.value)}
-        placeholder="Share your experience about this course..."
-        className="
+                          <textarea
+                            rows={4}
+                            value={review}
+                            onChange={(e) => setReview(e.target.value)}
+                            placeholder="Share your experience about this course..."
+                            className="
             w-full
             rounded-lg
             border
@@ -1095,8 +1165,8 @@ if (!review.trim()) {
             focus:ring-2
             focus:ring-orange-300
         "
-    />
-</div>
+                          />
+                        </div>
 
 
                         <button
@@ -1113,12 +1183,12 @@ if (!review.trim()) {
                             <><FaStar /> Submit Rating & Review</>
                           )}
                         </button>
-
+                        {/* 
                         {ratingMessage && !ratingSubmitted && (
                           <p className="text-red-600 text-xs font-medium text-center">
                             {ratingMessage}
                           </p>
-                        )}
+                        )} */}
                       </div>
                     )}
                   </div>
@@ -1291,7 +1361,69 @@ if (!review.trim()) {
 
         </div>
       </div>
+
+
+
+
+      {showRatingPopup && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+
+          <div className="bg-white w-[90%] max-w-sm rounded-xl shadow-2xl overflow-hidden">
+
+            <div
+              className={`p-5 text-white text-center
+        ${popupData.type === "success"
+                  ? "bg-green-600"
+                  : popupData.type === "warning"
+                    ? "bg-orange-500"
+                    : "bg-red-600"
+                }`}
+            >
+              <div className="text-5xl mb-2">
+                {popupData.type === "success"
+                  ? "✅"
+                  : popupData.type === "warning"
+                    ? "⭐"
+                    : "❌"}
+              </div>
+
+              <h2 className="text-xl font-bold">
+                {popupData.title}
+              </h2>
+            </div>
+
+            <div className="p-6 text-center">
+
+              <p className="text-gray-600 leading-7">
+                {popupData.message}
+              </p>
+
+              <button
+                onClick={() => setShowRatingPopup(false)}
+                className={`mt-6 w-full py-3 rounded-lg text-white font-semibold transition
+          ${popupData.type === "success"
+                    ? "bg-green-600 hover:bg-green-700"
+                    : popupData.type === "warning"
+                      ? "bg-orange-500 hover:bg-orange-600"
+                      : "bg-red-600 hover:bg-red-700"
+                  }`}
+              >
+                OK
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+      )}
+
+
+
+
+
     </div>
+
   );
 };
 
