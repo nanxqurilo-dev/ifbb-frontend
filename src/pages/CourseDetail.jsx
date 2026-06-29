@@ -438,13 +438,19 @@ const CourseDetail = () => {
     setRatingMessage("");
 
     try {
+      const payload = {
+        user_id: extractedUserId,
+        course_id: id,
+        value: selectedRating,
+        review: "this course is good"
+      }
+
+      console.log(payload);
+
       const response = await axios.post(
         `https://api.ifbb.qurilo.com/api/user/course/user-rating`,
-        {
-          user_id: extractedUserId,
-          course_id: id,
-          value: selectedRating,
-        },
+
+        payload,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -710,8 +716,8 @@ const CourseDetail = () => {
             <div className="bg-white rounded overflow-hidden">
               <div
                 className={`p-8 text-white ${examResults.passed
-                    ? "bg-gradient-to-r from-green-500 to-emerald-500"
-                    : "bg-gradient-to-r from-red-500 to-orange-500"
+                  ? "bg-gradient-to-r from-green-500 to-emerald-500"
+                  : "bg-gradient-to-r from-red-500 to-orange-500"
                   }`}
               >
                 <div className="text-center">
@@ -844,12 +850,12 @@ const CourseDetail = () => {
                   key={idx}
                   onClick={() => setCurrentQuestionIndex(idx)}
                   className={`w-8 h-8 rounded-full font-bold text-sm transition ${idx === currentQuestionIndex
-                      ? "bg-blue-600 text-white ring-2 ring-blue-300"
-                      : selectedAnswers[idx] !== undefined
-                        ? "bg-green-500 text-white hover:bg-green-600"
-                        : skippedQuestions.has(idx)
-                          ? "bg-yellow-400 text-gray-900 hover:bg-yellow-500"
-                          : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                    ? "bg-blue-600 text-white ring-2 ring-blue-300"
+                    : selectedAnswers[idx] !== undefined
+                      ? "bg-green-500 text-white hover:bg-green-600"
+                      : skippedQuestions.has(idx)
+                        ? "bg-yellow-400 text-gray-900 hover:bg-yellow-500"
+                        : "bg-gray-200 text-gray-700 hover:bg-gray-300"
                     }`}
                 >
                   {idx + 1}
@@ -868,8 +874,8 @@ const CourseDetail = () => {
                   <label
                     key={optionIdx}
                     className={`flex items-center p-4 border-2 rounded cursor-pointer transition ${selectedAnswers[currentQuestionIndex] === optionIdx
-                        ? "border-blue-500 bg-blue-50"
-                        : "border-gray-200 bg-white hover:border-blue-300"
+                      ? "border-blue-500 bg-blue-50"
+                      : "border-gray-200 bg-white hover:border-blue-300"
                       }`}
                   >
                     <input
@@ -939,7 +945,7 @@ const CourseDetail = () => {
           <div className="w-full lg:w-1/2">
             <div className="bg-white rounded overflow-hidden shadow">
               {/* <div className="relative h-[400px] bg-gradient-to-br from-gray-200 to-gray-300 overflow-hidden"> */}
-               <div className="relative w-full bg-gray-100">
+              <div className="relative w-full bg-gray-100">
                 <span className="bg-red-600 text-white text-sm m-1 absolute rounded border-none outline-none p-1">
                   {parseInt(discountedPrice)}%
                 </span>
@@ -954,15 +960,15 @@ const CourseDetail = () => {
 
 
 
-<img
-  src={courseThumbnail}
-  alt={title}
-  className="w-full h-auto block"
-  onError={(e) => {
-    e.target.src =
-      "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800";
-  }}
-/>
+                <img
+                  src={courseThumbnail}
+                  alt={title}
+                  className="w-full h-auto block"
+                  onError={(e) => {
+                    e.target.src =
+                      "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800";
+                  }}
+                />
 
 
               </div>
@@ -1035,8 +1041,8 @@ const CourseDetail = () => {
                             >
                               <FaStar
                                 className={`text-2xl transition-colors ${star <= (hoveredRating || selectedRating)
-                                    ? "text-orange-400"
-                                    : "text-gray-300"
+                                  ? "text-orange-400"
+                                  : "text-gray-300"
                                   }`}
                               />
                             </button>
@@ -1052,8 +1058,8 @@ const CourseDetail = () => {
                           onClick={handleRatingSubmit}
                           disabled={ratingLoading}
                           className={`w-full py-2 px-4 text-sm font-bold rounded transition flex items-center justify-center gap-2 ${ratingLoading
-                              ? "bg-gray-300 cursor-not-allowed text-gray-500"
-                              : "bg-orange-500 hover:bg-orange-600 text-white cursor-pointer"
+                            ? "bg-gray-300 cursor-not-allowed text-gray-500"
+                            : "bg-orange-500 hover:bg-orange-600 text-white cursor-pointer"
                             }`}
                         >
                           {ratingLoading ? (
@@ -1079,8 +1085,8 @@ const CourseDetail = () => {
                     onClick={handlePurchase}
                     disabled={isPurchaseLoading}
                     className={`w-full mt-6 py-3 px-4 font-bold text-sm rounded shadow-lg flex items-center justify-center gap-3 transition-all ${isPurchaseLoading
-                        ? "bg-gray-400 cursor-not-allowed"
-                        : "bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 hover:shadow-xl cursor-pointer text-white"
+                      ? "bg-gray-400 cursor-not-allowed"
+                      : "bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 hover:shadow-xl cursor-pointer text-white"
                       }`}
                   >
                     {isPurchaseLoading ? (
@@ -1126,10 +1132,10 @@ const CourseDetail = () => {
                       <div
                         key={module._id}
                         className={`border-2 text-sm rounded px-3 py-2 transition-all ${isLocked
-                            ? "border-gray-200 opacity-70 cursor-not-allowed"
-                            : isActive
-                              ? "border-blue-300 bg-blue-50 cursor-pointer hover:border-blue-400 hover:bg-blue-100"
-                              : "border-gray-200 hover:border-gray-300 cursor-default"
+                          ? "border-gray-200 opacity-70 cursor-not-allowed"
+                          : isActive
+                            ? "border-blue-300 bg-blue-50 cursor-pointer hover:border-blue-400 hover:bg-blue-100"
+                            : "border-gray-200 hover:border-gray-300 cursor-default"
                           }`}
                       >
                         <div
