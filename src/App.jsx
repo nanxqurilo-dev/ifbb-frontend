@@ -18,6 +18,7 @@ import News from "./pages/News";
 import ContactUs from "./pages/ContactUs";
 import CourseDetail from "./pages/CourseDetail";
 import PurchaseCourse from "./pages/PurchaseCourse";
+import ProtectedRoutes from "./layout/ProtectedRoutes";
 
 // Auth
 import Login from "./Auth/Login";
@@ -40,7 +41,14 @@ const router = createBrowserRouter(
       <Route path="/" element={<Navbar />}>
         <Route index element={<Home />} />
         <Route path="course" element={<Course />} />
-        <Route path="purchasecourse" element={<PurchaseCourse />} />
+        <Route
+          path="purchasecourse"
+          element={
+            <ProtectedRoutes>
+              <PurchaseCourse />
+            </ProtectedRoutes>
+          }
+        />
         <Route path="about" element={<About />} />
         <Route path="gallery" element={<Gallery />} />
         <Route path="certificates" element={<Certficates />} />
